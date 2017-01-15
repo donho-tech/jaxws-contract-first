@@ -1,0 +1,42 @@
+<definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://hellojaxws.example.com/"
+             xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://schemas.xmlsoap.org/wsdl/"
+             targetNamespace="http://hellojaxws.example.com/" name="GreetingService">
+    <types>
+        <xsd:schema>
+            <xsd:import namespace="http://hellojaxws.example.com/" schemaLocation="hello.xsd"/>
+        </xsd:schema>
+    </types>
+
+    <message name="greeting">
+        <part name="parameters" element="tns:greeting"/>
+    </message>
+    <message name="greetingResponse">
+        <part name="parameters" element="tns:greetingResponse"/>
+    </message>
+
+    <portType name="GreetingService">
+        <operation name="greeting">
+            <input message="tns:greeting"/>
+            <output message="tns:greetingResponse"/>
+        </operation>
+    </portType>
+
+    <binding name="GreetingServicePortBinding" type="tns:GreetingService">
+        <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+        <operation name="greeting">
+            <soap:operation soapAction=""/>
+            <input>
+                <soap:body use="literal"/>
+            </input>
+            <output>
+                <soap:body use="literal"/>
+            </output>
+        </operation>
+    </binding>
+
+    <service name="GreetingService">
+        <port name="GreetingServicePort" binding="tns:GreetingServicePortBinding">
+            <soap:address location="http://localhost:8080/hello"/>
+        </port>
+    </service>
+</definitions>
